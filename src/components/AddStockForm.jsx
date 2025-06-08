@@ -7,6 +7,7 @@ const AddStockForm = ({ products, setProducts }) => {
   const [loading, setLoading] = useState(false);
   const [message, setMessage] = useState('');
 
+   const apiUrl = import.meta.env.VITE_API_URL
   // Derive unique categories from products
   const categories = useMemo(() => {
     const allCategories = products.map((p) => p.category);
@@ -31,7 +32,7 @@ const AddStockForm = ({ products, setProducts }) => {
   
     try {
       setLoading(true);
-      const response = await fetch(`/api/products/${productId}/add-stock`, {
+      const response = await fetch(`${apiUrl}/products/${productId}/add-stock`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ quantity: parseInt(quantity), category }),

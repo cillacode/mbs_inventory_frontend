@@ -8,14 +8,12 @@ import SalesForm from './components/SalesForm';
 import AddProductForm from './components/AddProductForm';
 import DepositProduct from './components/DepositProduct';
 import LoginPage from './LoginPage';
-import Dashboard from './Dashboard'; // Your main app
+import Dashboard from './Dashboard';
 import { Modal, Button, Form } from 'react-bootstrap';
 import { Tabs, Tab } from 'react-bootstrap';
-
-
-
-
 import axios from 'axios';
+
+const apiUrl = import.meta.env.VITE_API_URL; // ✅ Using env variable
 
 const App = () => {
   const [products, setProducts] = useState([]);
@@ -28,41 +26,38 @@ const App = () => {
     const storedUser = localStorage.getItem('user');
     return storedUser ? JSON.parse(storedUser) : null;
   });
-  
+
   const handleLogout = () => {
     localStorage.removeItem('user');
     setUser(null);
   };
-  
+
   const fetchProducts = async () => {
     try {
-      const response = await axios.get('http://localhost:5000/api/products');
+      const response = await axios.get(`${apiUrl}/api/products`);
       setProducts(response.data);
     } catch (err) {
       console.error('Error fetching products:', err);
     }
   };
- // deposit 
- // Fetch deposits from backend
-const fetchDeposits = async () => {
-  try {
-    const response = await axios.get('http://localhost:5000/api/products/deposits');
-    setDeposits(response.data);
-  } catch (err) {
-    console.error('Error fetching deposits:', err);
-  }
-};
 
-useEffect(() => {
-  fetchProducts();
-  fetchDeposits(); // fetch deposit records too
-}, []);
+  const fetchDeposits = async () => {
+    try {
+      const response = await axios.get(`${apiUrl}/api/products/deposits`);
+      setDeposits(response.data);
+    } catch (err) {
+      console.error('Error fetching deposits:', err);
+    }
+  };
 
-
+  useEffect(() => {
+    fetchProducts();
+    fetchDeposits();
+  }, []);
 
   const handleAddProduct = async (product) => {
     try {
-      const response = await axios.post('http://localhost:5000/api/products', product);
+      const response = await axios.post(`${apiUrl}/api/products`, product);
       if (response.status === 200 || response.status === 201) {
         const addedProduct = response.data;
         setProducts((prev) => [...prev, { ...addedProduct, restockHistory: [], salesHistory: [] }]);
@@ -98,30 +93,24 @@ useEffect(() => {
     );
   };
 
-// Add new deposit and sync with backend
-const handleAddDeposit = async (deposit) => {
-  try {
-    const response = await axios.post('http://localhost:5000/api/products/deposits', deposit);
-    if (response.status === 201) {
-      setDeposits((prev) => [...prev, response.data]);
+  const handleAddDeposit = async (deposit) => {
+    try {
+      const response = await axios.post(`${apiUrl}/api/products/deposits`, deposit);
+      if (response.status === 201) {
+        setDeposits((prev) => [...prev, response.data]);
+      }
+    } catch (err) {
+      console.error('Error adding deposit:', err);
     }
-  } catch (err) {
-    console.error('Error adding deposit:', err);
-  }
-};
+  };
 
-  useEffect(() => {
-    fetchProducts();
-    fetchDeposits(); // Add this line
-  }, []);
-  
   const handleUpdateDepositStatus = async (depositId, newStatus, supplyDate) => {
     try {
-      const response = await axios.put(`http://localhost:5000/api/products/deposits/${depositId}`, {
+      const response = await axios.put(`${apiUrl}/api/products/deposits/${depositId}`, {
         status: newStatus,
         deliveryDate: newStatus === 'Supplied' ? supplyDate : ''
       });
-  
+
       if (response.status === 200) {
         setDeposits((prevDeposits) =>
           prevDeposits.map((deposit) =>
@@ -136,10 +125,9 @@ const handleAddDeposit = async (deposit) => {
     } catch (err) {
       console.error('Error updating deposit status:', err);
     }
-  
+
     setIsModalOpen(false);
   };
-  
 
   const handleEditStatus = (depositId) => {
     const deposit = deposits.find((d) => d.id === depositId);
@@ -153,11 +141,10 @@ const handleAddDeposit = async (deposit) => {
     handleUpdateDepositStatus(currentDepositId, modalStatus, modalSupplyDate);
   };
 
-   return (
+  return (
     <div className="App p-3">
       {!user ? (
         <LoginPage onLogin={setUser} />
-
       ) : (
         <>
           <div className="d-flex justify-content-between align-items-center p-2">
@@ -169,7 +156,7 @@ const handleAddDeposit = async (deposit) => {
 
           <Dashboard user={user} />
 
-          <div className={`tabs-container ${window.innerWidth < 768 ? "tabs-bottom" : "tabs-top"}`}>
+          <div className={`tabs-container ${window.innerWidth < 768 ? "tabs-top" : "tabs-top"}`}>
             <Tabs defaultActiveKey="productTable" id="inventory-tabs" className="mb-3" justify>
               <Tab eventKey="productTable" title="Stock Table">
                 <ProductTable products={products} setProducts={setProducts} />
@@ -281,7 +268,6 @@ const handleAddDeposit = async (deposit) => {
       )}
     </div>
   );
-  
 };
 
 export default App;

@@ -4,6 +4,8 @@ import { Modal, Button } from "react-bootstrap";
 import { jsPDF } from "jspdf";
 import SalesForm from "./SalesForm";
 
+const apiUrl = import.meta.env.VITE_API_URL;
+
 const ProductTable = () => {
   const [products, setProducts] = useState([]);
   const [editingProductId, setEditingProductId] = useState(null);
@@ -15,39 +17,36 @@ const ProductTable = () => {
 
   const fetchProducts = async () => {
     try {
-      const response = await fetch("http://localhost:5000/api/products");
+      const response = await fetch(`${apiUrl}/api/products`);
       const data = await response.json();
       setProducts(data);
     } catch (error) {
       console.error("Error fetching products:", error);
     }
   };
-//function to add product 
-const handleAddProduct = async (newProduct) => {
-    const response = await fetch("http://localhost:5000/api/products", {
+
+  const handleAddProduct = async (newProduct) => {
+    const response = await fetch(`${apiUrl}/api/products`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(newProduct),
     });
-  
+
     if (!response.ok) {
-      const errorData = await response.json(); // assume backend sends { error: "message" }
+      const errorData = await response.json();
       const error = new Error(errorData.error || "Failed to add product");
       error.status = response.status;
       throw error;
     }
-  
-    const addedProduct = await response.json();
-    fetchProducts();
-    return addedProduct;
-  };
-  
-  
 
-const handleSaveClick = async (productId) => {
+    await fetchProducts();
+    return await response.json();
+  };
+
+  const handleSaveClick = async (productId) => {
     if (newPrice && !isNaN(newPrice)) {
       try {
-        const response = await fetch(`http://localhost:5000/api/products/${productId}`, {
+        const response = await fetch(`${apiUrl}/api/products/${productId}`, {
           method: "PUT",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({ price: parseFloat(newPrice) }),
@@ -70,7 +69,7 @@ const handleSaveClick = async (productId) => {
 
   const fetchSalesHistory = async (productId) => {
     try {
-      const response = await fetch(`http://localhost:5000/api/products/${productId}/sales`);
+      const response = await fetch(`${apiUrl}/api/products/${productId}/sales`);
       if (response.ok) {
         const data = await response.json();
         setSaleHistory(data);
@@ -86,12 +85,12 @@ const handleSaveClick = async (productId) => {
 
   const handleRecordSale = async (productId, quantity, salespersonName) => {
     try {
-      await fetch(`http://localhost:5000/api/products/${productId}/sell`, {
+      await fetch(`${apiUrl}/api/products/${productId}/sell`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ quantity, salesperson: salespersonName }),
       });
-      await fetchProducts(); // Refresh product list after sale
+      await fetchProducts();
     } catch (error) {
       console.error("Error recording sale:", error);
     }
@@ -124,7 +123,6 @@ const handleSaveClick = async (productId) => {
     setNewPrice(currentPrice);
   };
 
-  
   const downloadPDF = (type) => {
     const doc = new jsPDF();
     const title = `${type === "restock" ? "Restock" : "Sale"} History for ${currentProduct.name}`;
@@ -172,60 +170,55 @@ const handleSaveClick = async (productId) => {
           </tr>
         </thead>
         <tbody>
-  {products.length > 0 ? (
-    products.map((product) => (
-      <tr key={product.id}>
-        <td data-label="Name">{product.name}</td>
-        <td data-label="Category">{product.category}</td>
-        <td data-label="Stock">{product.stock}</td>
-        <td data-label="Price (₦)">
-          {editingProductId === product.id ? (
-            <input
-              type="number"
-              value={newPrice}
-              onChange={(e) => setNewPrice(e.target.value)}
-            />
+          {products.length > 0 ? (
+            products.map((product) => (
+              <tr key={product.id}>
+                <td>{product.name}</td>
+                <td>{product.category}</td>
+                <td>{product.stock}</td>
+                <td>
+                  {editingProductId === product.id ? (
+                    <input
+                      type="number"
+                      value={newPrice}
+                      onChange={(e) => setNewPrice(e.target.value)}
+                    />
+                  ) : (
+                    Math.floor(product.price).toLocaleString()
+                  )}
+                </td>
+                <td>
+                  {product.last_restock_quantity && product.last_restock_date ? (
+                    `+${product.last_restock_quantity} on ${new Date(
+                      product.last_restock_date
+                    ).toLocaleDateString()}`
+                  ) : (
+                    "No restock yet"
+                  )}
+                </td>
+                <td>
+                  <button onClick={() => openRestockModal(product)}>View Restock</button>
+                </td>
+                <td>
+                  <button onClick={() => openSaleHistoryModal(product)}>View Sale</button>
+                </td>
+                <td>
+                  {editingProductId === product.id ? (
+                    <button onClick={() => handleSaveClick(product.id)}>Save</button>
+                  ) : (
+                    <button onClick={() => handleEditClick(product.id, product.price)}>Edit</button>
+                  )}
+                </td>
+              </tr>
+            ))
           ) : (
-            Math.floor(product.price).toLocaleString()
+            <tr>
+              <td colSpan="8">No products available.</td>
+            </tr>
           )}
-        </td>
-        <td data-label="Last Restock">
-          {product.last_restock_quantity && product.last_restock_date ? (
-            `+${product.last_restock_quantity} on ${new Date(
-              product.last_restock_date
-            ).toLocaleDateString()}`
-          ) : (
-            "No restock yet"
-          )}
-        </td>
-        <td data-label="Restock History">
-          <button onClick={() => openRestockModal(product)}>View Restock</button>
-        </td>
-        <td data-label="Sale History">
-          <button onClick={() => openSaleHistoryModal(product)}>View Sale</button>
-        </td>
-        <td data-label="Action">
-          {editingProductId === product.id ? (
-            <button onClick={() => handleSaveClick(product.id)}>Save</button>
-          ) : (
-            <button onClick={() => handleEditClick(product.id, product.price)}>Edit</button>
-          )}
-        </td>
-      </tr>
-    ))
-  ) : (
-    <tr>
-      <td colSpan="8">No products available.</td>
-    </tr>
-  )}
-</tbody>
-
+        </tbody>
       </table>
-{/* 
-      <AddProductForm onAddProduct={fetchProducts} />
-      <SalesForm products={products} onRecordSale={handleRecordSale} /> */}
 
-      {/* Restock Modal */}
       {currentProduct && (
         <Modal show={showModal} onHide={closeModal}>
           <Modal.Header closeButton>
@@ -259,7 +252,6 @@ const handleSaveClick = async (productId) => {
         </Modal>
       )}
 
-      {/* Sale History Modal */}
       {currentProduct && showSaleHistoryModal && (
         <Modal show={showSaleHistoryModal} onHide={closeSaleHistoryModal}>
           <Modal.Header closeButton>

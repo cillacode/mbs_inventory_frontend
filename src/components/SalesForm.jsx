@@ -7,6 +7,9 @@ const SalesForm = ({ products, onRecordSale }) => {
   const [salesperson, setSalesperson] = useState('');
   const [salespeople, setSalespeople] = useState([]);
 
+
+ const apiUrl = import.meta.env.VITE_API_URL;
+
   // Fetch salespeople data (this can be hardcoded or fetched from an API)
   useEffect(() => {
     // For now, using hardcoded salespeople
@@ -26,7 +29,7 @@ const SalesForm = ({ products, onRecordSale }) => {
     }
 
     try {
-      const res = await fetch('http://localhost:5000/api/products/record-sale', {
+      const res = await fetch('${apiUrl}/products/record-sale', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
