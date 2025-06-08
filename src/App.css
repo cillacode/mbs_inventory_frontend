@@ -1,0 +1,151 @@
+/* AddProductForm.css */
+
+
+.app {
+  font-family: 'Inter', sans-serif;
+  padding: 2rem;
+  background-color: #f9f9f9;
+  color: #333;
+}
+h1, h2 {
+  text-align: center;
+  color: #2c3e50;
+}
+
+button {
+  background-color: #3498db;
+  color: white;
+  border: none;
+  padding: 8px 12px;
+  border-radius: 4px;
+  margin: 5px;
+  cursor: pointer;
+}
+
+/* button:hover {
+  background-color: #e62e65;
+} */
+
+.product-table-container {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 2rem auto;
+  background-color: white;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.product-table-container th,
+.product-table-container td {
+  padding: 12px;
+  border: 1px solid #ddd;
+  text-align: center;
+}
+
+.product-table-container th {
+  background-color: #f2f2f2;
+  color: #333;
+}
+
+/* .table th {
+  background-color: #f8f9fa;
+  text-align: center;
+}
+
+.table td,
+.table th {
+  vertical-align: middle;
+} */
+
+
+.add-product-container {
+  background-color: #9a3232;
+  padding: 2rem;
+  margin-top: 2rem;
+  border-radius: 10px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  max-width: 500px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.add-product-container h2 {
+  margin-bottom: 1.5rem;
+  font-size: 1.8rem;
+  color: #2bc3e8;
+  text-align: center;
+}
+
+.add-product-container form {
+  display: flex;
+  flex-direction: column;
+}
+
+.add-product-container form div {
+  margin-bottom: 1.2rem;
+  text-align: left;
+}
+
+.add-product-container label {
+  display: block;
+  margin-bottom: 0.5rem;
+  font-weight: 600;
+  color: #333;
+}
+
+.add-product-container input {
+  width: 100%;
+  padding: 0.75rem;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  font-size: 1rem;
+  transition: border-color 0.3s ease;
+}
+
+.add-product-container input:focus {
+  outline: none;
+  border-color: #2bc3e8;
+}
+
+.add-product-container button {
+  background-color: #2bc3e8;
+  color: white;
+  padding: 0.8rem;
+  font-size: 1rem;
+  font-weight: bold;
+  border: none;
+  border-radius: 6px;
+  transition: background-color 0.3s ease;
+}
+
+.add-product-container button:hover {
+  background-color: #1fa4b8;
+}
+
+.tabs-bottom .nav-tabs {
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+  background: white;
+  z-index: 10;
+  border-top: 1px solid #ccc;
+  border-bottom: none;
+  justify-content: space-around;
+}
+
+.tabs-top .nav-tabs {
+  position: sticky;
+  top: 0;
+  background: white;
+  z-index: 10;
+  border-bottom: 1px solid #ccc;
+}
+
+ .tabs-top .nav-tabs a.active {
+  border-bottom: 2px solid #007bff;
+  font-weight: 600;
+  background: #007bff;
+}
+/* button  a:hover {
+  color: #811034;
+} */
+
