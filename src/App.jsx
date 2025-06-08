@@ -148,7 +148,6 @@ const App = () => {
       ) : (
         <>
           <div className="d-flex justify-content-between align-items-center p-2">
-            <h1>Mbams Living Ventures Inventory Tracker</h1>
             <Button variant="outline-danger" onClick={handleLogout}>
               Logout
             </Button>

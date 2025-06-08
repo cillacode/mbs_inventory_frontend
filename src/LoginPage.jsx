@@ -35,6 +35,9 @@ export default function LoginPage({ onLogin }) {
 
   return (
     <div className="login-page">
+    <div className="login-header">
+      <h1>Mbams Living Ventures Inventory</h1>
+    </div>
       <form className="login-form" onSubmit={handleSubmit}>
         <h2>Login</h2>
 

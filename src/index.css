@@ -43,7 +43,7 @@ a {
 }
 
 /* Button styles for consistency */
-button {
+/* button {
   cursor: pointer;
   border: none;
   background-color: #25b13a;
@@ -52,15 +52,16 @@ button {
   border-radius: 5px;
   font-size: 1rem;
   transition: background-color 0.3s ease;
-}
- button  a.active {
+} */
+ /* button  a.active {
   border-bottom: 2px solid #007bff;
   font-weight: 600;
-}
+  background-color: #0f12e1;
+} */
 
-button:hover {
-  background-color: #ffffff;
-}
+/* button:hover {
+  background-color: #8e1212;
+} */
 
 /* Form field styles for input elements */
 input[type="text"],
@@ -224,10 +225,21 @@ body {
 .login-page {
   height: 100vh;
   display: flex;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
   padding: 20px;
+  
 }
+
+.login-header h1 {
+  font-size: 40px;
+  margin-bottom: 30px;
+  color: #1460ca;
+  max-width: 90%;
+  line-height: 1.4;
+}
+
 
 .login-form {
   background-color: white;
@@ -239,9 +251,10 @@ body {
   box-sizing: border-box;
 }
 
+
 .login-form h2 {
   text-align: center;
-  margin-bottom: 20px;
+  margin-bottom: 30px;
   color: #1f2937;
 }
 
@@ -286,6 +299,11 @@ body {
 
 /* Tablets */
 @media (max-width: 768px) {
+ .login-header h1 {
+    font-size: 22px;
+    margin-bottom: 25px;
+  }
+
   .login-form {
     padding: 25px 30px;
   }
@@ -301,6 +319,10 @@ body {
 
 /* Mobile phones */
 @media (max-width: 480px) {
+   .login-header h1 {
+    font-size: 22px;
+    margin-bottom: 25px;
+  }
   .login-form {
     padding: 20px;
     box-shadow: none;
