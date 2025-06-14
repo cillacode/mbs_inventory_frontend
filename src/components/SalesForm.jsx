@@ -29,7 +29,7 @@ const SalesForm = ({ products, onRecordSale }) => {
     }
 
     try {
-      const res = await fetch('${apiUrl}/products/record-sale', {
+      const res = await fetch(`{apiUrl}/products/record-sale`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
