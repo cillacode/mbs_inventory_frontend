@@ -7,7 +7,8 @@ export default function LoginPage({ onLogin }) {
 
   const users = [
     { username: 'admin', email: 'admin@example.com', password: 'admin123', name: 'Mbams Admin' },
-    { username: 'chris', email: 'chrisnugo@gmail.com', password: 'password123', name: 'Christopher Mbams' }
+    { username: 'beauty', email: 'chrisnugo@gmail.com', password: 'password123', name: 'Beauty Titus' },
+    { username: 'gift', email: 'chrisnugo@gmail.com', password: 'password123', name: 'Gift Christopher' }
   ];
 
   const handleChange = (e) => {

@@ -17,7 +17,7 @@ const ProductTable = () => {
 
   const fetchProducts = async () => {
     try {
-      const response = await fetch(`${apiUrl}/api/products`);
+      const response = await fetch(`${apiUrl}/products`);
       const data = await response.json();
       setProducts(data);
     } catch (error) {
@@ -26,7 +26,7 @@ const ProductTable = () => {
   };
 
   const handleAddProduct = async (newProduct) => {
-    const response = await fetch(`${apiUrl}/api/products`, {
+    const response = await fetch(`${apiUrl}/products`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(newProduct),
@@ -69,7 +69,7 @@ const ProductTable = () => {
 
   const fetchSalesHistory = async (productId) => {
     try {
-      const response = await fetch(`${apiUrl}/api/products/${productId}/sales`);
+      const response = await fetch(`${apiUrl}/products/${productId}/sales`);
       if (response.ok) {
         const data = await response.json();
         setSaleHistory(data);
@@ -85,7 +85,7 @@ const ProductTable = () => {
 
   const handleRecordSale = async (productId, quantity, salespersonName) => {
     try {
-      await fetch(`${apiUrl}/api/products/${productId}/sell`, {
+      await fetch(`${apiUrl}/products/${productId}/sell`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ quantity, salesperson: salespersonName }),

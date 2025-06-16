@@ -1,7 +1,7 @@
 // src/components/DepositProduct.jsx
 import React, { useState } from 'react';
 
-const salesPersons = ['Jane Doe', 'John Smith', 'Ada Uche'];
+const salesPersons = ['Gift Christopher', 'Beauty Titus', 'Mbams Admin'];
 
 const DepositProduct = ({ products, onAddDeposit }) => {
   const [formData, setFormData] = useState({

@@ -8,6 +8,7 @@ const AddStockForm = ({ products, setProducts }) => {
   const [message, setMessage] = useState('');
 
    const apiUrl = import.meta.env.VITE_API_URL
+   
   // Derive unique categories from products
   const categories = useMemo(() => {
     const allCategories = products.map((p) => p.category);

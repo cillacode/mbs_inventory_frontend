@@ -14,9 +14,9 @@ const SalesForm = ({ products, onRecordSale }) => {
   useEffect(() => {
     // For now, using hardcoded salespeople
     setSalespeople([
-      { id: 1, name: 'John Doe' },
-      { id: 2, name: 'Jane Smith' },
-      { id: 3, name: 'Mark Johnson' },
+      { id: 1, name: 'Beauty Titus' },
+      { id: 2, name: 'Gift Christopher' },
+      { id: 3, name: 'Mbams Admin' },
     ]);
   }, []);
 
