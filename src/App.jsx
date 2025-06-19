@@ -43,7 +43,7 @@ const App = () => {
 
   const fetchDeposits = async () => {
     try {
-      const response = await axios.get(`${apiUrl}/api/products/deposits`);
+      const response = await axios.get(`${apiUrl}/products/deposits`);
       setDeposits(response.data);
     } catch (err) {
       console.error('Error fetching deposits:', err);
@@ -57,7 +57,7 @@ const App = () => {
 
   const handleAddProduct = async (product) => {
     try {
-      const response = await axios.post(`${apiUrl}/api/products`, product);
+      const response = await axios.post(`${apiUrl}/products`, product);
       if (response.status === 200 || response.status === 201) {
         const addedProduct = response.data;
         setProducts((prev) => [...prev, { ...addedProduct, restockHistory: [], salesHistory: [] }]);
@@ -95,7 +95,7 @@ const App = () => {
 
   const handleAddDeposit = async (deposit) => {
     try {
-      const response = await axios.post(`${apiUrl}/api/products/deposits`, deposit);
+      const response = await axios.post(`${apiUrl}/products/deposits`, deposit);
       if (response.status === 201) {
         setDeposits((prev) => [...prev, response.data]);
       }
