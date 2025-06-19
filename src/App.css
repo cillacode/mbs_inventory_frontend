@@ -26,7 +26,7 @@ h1, h2 {
   background-color: #e62e65;
 } */
 
-.product-table-container {
+/* .product-table-container {
   width: 100%;
   border-collapse: collapse;
   margin: 2rem auto;
@@ -44,7 +44,7 @@ h1, h2 {
 .product-table-container th {
   background-color: #f2f2f2;
   color: #333;
-}
+} */
 
 /* .table th {
   background-color: #f8f9fa;
