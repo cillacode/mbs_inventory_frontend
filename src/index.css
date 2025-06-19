@@ -172,6 +172,8 @@ textarea {
   background-color: #ffffff;
   border-radius: 10px;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+   overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
 }
 
 .product-table-container h2 {
