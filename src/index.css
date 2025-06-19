@@ -65,7 +65,11 @@ a {
 
 /* Form field styles for input elements */
 input[type="text"],
-input[type="number"],
+input[type="number"]::-webkit-outer-spin-button,
+input[type="number"]::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
 input[type="email"],
 textarea {
   width: 100%;
