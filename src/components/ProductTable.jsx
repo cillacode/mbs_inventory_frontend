@@ -24,6 +24,7 @@ const ProductTable = () => {
       console.error("Error fetching products:", error);
     }
   };
+console.log("API URL:", apiUrl);
 
   const handleAddProduct = async (newProduct) => {
     const response = await fetch(`${apiUrl}/products`, {
@@ -46,7 +47,7 @@ const ProductTable = () => {
   const handleSaveClick = async (productId) => {
     if (newPrice && !isNaN(newPrice)) {
       try {
-        const response = await fetch(`${apiUrl}/api/products/${productId}`, {
+        const response = await fetch(`${apiUrl}/products/${productId}`, {
           method: "PUT",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({ price: parseFloat(newPrice) }),
