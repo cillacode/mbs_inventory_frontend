@@ -47,7 +47,7 @@ console.log("API URL:", apiUrl);
   const handleSaveClick = async (productId) => {
     if (newPrice && !isNaN(newPrice)) {
       try {
-        const response = await fetch(`${apiUrl}/api/products/${productId}`, {
+        const response = await fetch(`${apiUrl}/products/${productId}`, {
           method: "PUT",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({ price: parseFloat(newPrice) }),
