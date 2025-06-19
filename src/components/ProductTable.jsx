@@ -27,7 +27,7 @@ const ProductTable = () => {
 console.log("API URL:", apiUrl);
 
   const handleAddProduct = async (newProduct) => {
-    const response = await fetch(`${apiUrl}/api/products`, {
+    const response = await fetch(`${apiUrl}/products`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(newProduct),
