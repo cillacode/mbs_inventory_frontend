@@ -1,5 +1,5 @@
 import { useState } from 'react';
-// import './LoginPage.css'; // ⬅️ Import the CSS
+import './LoginPage.css'; // ⬅️ Import the CSS
 
 export default function LoginPage({ onLogin }) {
   const [form, setForm] = useState({ identifier: '', password: '' });

@@ -1,9 +1,10 @@
+import "./ProductTable.css";
 import React, { useState, useEffect } from "react";
 import AddProductForm from "./AddProductForm";
 import { Modal, Button } from "react-bootstrap";
 import { jsPDF } from "jspdf";
 import SalesForm from "./SalesForm";
-
+ 
 const apiUrl = import.meta.env.VITE_API_URL;
 
 const ProductTable = () => {
