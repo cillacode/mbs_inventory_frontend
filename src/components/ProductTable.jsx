@@ -155,10 +155,15 @@ console.log("API URL:", apiUrl);
     fetchProducts();
   }, []);
 
-  return (
-    <div className="product-table-container">
-      <h2>📦 Current Stock</h2>
+  
+      return (
+        <div className="product-table-container">
+    <h2>📦 Current Stock</h2>
+    
+    {/* Desktop Table View */}
+    <div className="desktop-view">
       <table border="1" cellPadding="10">
+        {/* Your existing table structure */}
         <thead>
           <tr>
             <th>Name</th>
@@ -220,6 +225,78 @@ console.log("API URL:", apiUrl);
           )}
         </tbody>
       </table>
+    </div>
+
+    {/* Mobile Card View */}
+    <div className="mobile-view">
+      {products.length > 0 ? (
+        products.map((product) => (
+          <div className="product-card" key={product.id}>
+            <div className="card-header">
+              <h3>{product.name}</h3>
+              <span className={`stock-badge ${product.stock < 5 ? 'low-stock' : ''}`}>
+                {product.stock} in stock
+              </span>
+            </div>
+
+            <div className="card-body">
+              <div className="card-row">
+                <span>Category:</span>
+                <span>{product.category}</span>
+              </div>
+              <div className="card-row">
+                <span>Price:</span>
+                <span>₦{Math.floor(product.price).toLocaleString()}</span>
+              </div>
+              <div className="card-row">
+                <span>Last Restock:</span>
+                <span>
+                  {product.last_restock_quantity && product.last_restock_date ? (
+                    `+${product.last_restock_quantity} on ${new Date(
+                      product.last_restock_date
+                    ).toLocaleDateString()}`
+                  ) : (
+                    "No restock yet"
+                  )}
+                </span>
+              </div>
+            </div>
+
+            <div className="card-actions">
+              <button 
+                className="action-btn"
+                onClick={() => openRestockModal(product)}
+              >
+                Restock
+              </button>
+              <button 
+                className="action-btn"
+                onClick={() => openSaleHistoryModal(product)}
+              >
+                Sales
+              </button>
+              {editingProductId === product.id ? (
+                <button 
+                  className="action-btn primary"
+                  onClick={() => handleSaveClick(product.id)}
+                >
+                  Save
+                </button>
+              ) : (
+                <button 
+                  className="action-btn"
+                  onClick={() => handleEditClick(product.id, product.price)}
+                >
+                  Edit
+                </button>
+              )}
+            </div>
+          </div>
+        ))
+      ) : (
+        <div className="no-products">No products available.</div>
+      )}
+    </div>
 
       {currentProduct && (
         <Modal show={showModal} onHide={closeModal}>
@@ -278,8 +355,11 @@ console.log("API URL:", apiUrl);
           </Modal.Footer>
         </Modal>
       )}
-    </div>
-  );
+  </div>
+     );
+
+     
+    
 };
 
 export default ProductTable;
