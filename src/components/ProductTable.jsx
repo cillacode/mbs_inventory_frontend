@@ -15,15 +15,15 @@ const ProductTable = () => {
   const [currentProduct, setCurrentProduct] = useState(null);
   const [saleHistory, setSaleHistory] = useState([]);
 
-  // const fetchProducts = async () => {
-  //   try {
-  //     const response = await fetch(`${apiUrl}/products`);
-  //     const data = await response.json();
-  //     setProducts(data);
-  //   } catch (error) {
-  //     console.error("Error fetching products:", error);
-  //   }
-  // };
+  const fetchProducts = async () => {
+    try {
+      const response = await fetch(`${apiUrl}/products`);
+      const data = await response.json();
+      setProducts(data);
+    } catch (error) {
+      console.error("Error fetching products:", error);
+    }
+  };
 console.log("API URL:", apiUrl);
 
   const handleAddProduct = async (newProduct) => {
