@@ -34,10 +34,10 @@ const App = () => {
 
   const fetchProducts = async () => {
     try {
-      const response = await axios.get(`${apiUrl}/api/products`);
+      const response = await axios.get(`${apiUrl}/products`);
       setProducts(response.data);
     } catch (err) {
-      console.error('Error fetching products:', err);
+      console.error('I cant fetch products:', err);
     }
   };
 
@@ -106,7 +106,7 @@ const App = () => {
 
   const handleUpdateDepositStatus = async (depositId, newStatus, supplyDate) => {
     try {
-      const response = await axios.put(`${apiUrl}/api/products/deposits/${depositId}`, {
+      const response = await axios.put(`${apiUrl}/products/deposits/${depositId}`, {
         status: newStatus,
         deliveryDate: newStatus === 'Supplied' ? supplyDate : ''
       });
