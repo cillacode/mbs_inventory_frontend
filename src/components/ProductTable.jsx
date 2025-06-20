@@ -189,6 +189,7 @@ console.log("API URL:", apiUrl);
                       type="number"
                       value={newPrice}
                       onChange={(e) => setNewPrice(e.target.value)}
+                      className="price-input"
                     />
                   ) : (
                     Math.floor(product.price).toLocaleString()
@@ -246,7 +247,19 @@ console.log("API URL:", apiUrl);
               </div>
               <div className="card-row">
                 <span>Price:</span>
-                <span>₦{Math.floor(product.price).toLocaleString()}</span>
+                <span>
+    {editingProductId === product.id ? (
+      <input
+        type="number"
+        value={newPrice}
+        onChange={(e) => setNewPrice(e.target.value)}
+        className="price-input"
+      />
+    ) : (
+      `₦${Math.floor(product.price).toLocaleString()}`
+    )}
+  </span>
+
               </div>
               <div className="card-row">
                 <span>Last Restock:</span>
@@ -265,37 +278,29 @@ console.log("API URL:", apiUrl);
             <div className="card-actions">
               <button 
                 className="action-btn"
-                onClick={() => openRestockModal(product)}
-              >
+                onClick={() => openRestockModal(product)} >
                 Restock
               </button>
               <button 
                 className="action-btn"
-                onClick={() => openSaleHistoryModal(product)}
-              >
+                onClick={() => openSaleHistoryModal(product)}>
                 Sales
               </button>
-                   {editingProductId === product.id ? (
-                    <button  onClick={() => handleSaveClick(product.id)}>Save</button>
-                  ) : (
-                    <button onClick={() => handleEditClick(product.id, product.price)}>Edit</button>
-                  )}
-
-              {/* {editingProductId === product.id ? (
-                <button 
-                  className="action-btn primary"
-                  onClick={() => handleSaveClick(product.id)}
-                >
-                  Save
-                </button>
-              ) : (
-                <button 
-                  className="action-btn"
-                  onClick={() => handleEditClick(product.id, product.price)}
-                >
-                  Edit
-                </button>
-              )} */}
+                {editingProductId === product.id ? (
+  <button 
+    className="action-btn primary"
+    onClick={() => handleSaveClick(product.id)}
+  >
+    Save
+  </button>
+) : (
+  <button 
+    className="action-btn"
+    onClick={() => handleEditClick(product.id, product.price)}
+  >
+    Edit
+  </button>
+)}   
             </div>
           </div>
         ))
