@@ -158,12 +158,11 @@ console.log("API URL:", apiUrl);
   
       return (
         <div className="product-table-container">
-    <h2>📦 Current Stock</h2>
+           <h2>📦 Current Stock</h2>
     
     {/* Desktop Table View */}
     <div className="desktop-view">
       <table border="1" cellPadding="10">
-        {/* Your existing table structure */}
         <thead>
           <tr>
             <th>Name</th>
