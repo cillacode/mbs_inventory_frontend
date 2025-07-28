@@ -1,6 +1,7 @@
 import React from "react";
 import DepositProduct from "./DepositProduct";
 import DepositTable from "./DepositTable";
+import "./DepositPage.css"; // <- create this file for styling
 
 const DepositPage = () => {
   return (

@@ -9,6 +9,7 @@ import AddProductForm from './components/AddProductForm';
 import DepositProduct from './components/DepositProduct';
 import LoginPage from './LoginPage';
 import Dashboard from './Dashboard';
+import DepositTable from './components/DepositTable';
 import { Modal, Button, Form } from 'react-bootstrap';
 import { Tabs, Tab } from 'react-bootstrap';
 import axios from 'axios';
@@ -179,90 +180,16 @@ const App = () => {
                   onAddDeposit={handleAddDeposit}
                   onUpdateDepositStatus={handleUpdateDepositStatus}
                 />
-                <h2> Deposit Records</h2>
-                <table border="1" cellPadding="10" className="product-table-container">
-                  <thead>
-                    <tr>
-                      <th>Product</th>
-                      <th>Category</th>
-                      <th>Quantity</th>
-                      <th>Amount Paid</th>
-                      <th>Balance Left</th>
-                      <th>Status</th>
-                      <th>Sales Person</th>
-                      <th>Customer Name</th>
-                      <th>Date of Deposit</th>
-                      <th>Supply Date</th>
-                      <th>Action</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {deposits.map((deposit) => (
-                      <tr key={deposit.id}>
-                        <td>{deposit.product}</td>
-                        <td>{deposit.category}</td>
-                        <td>{deposit.quantity}</td>
-                        <td>{deposit.amount_paid}</td>
-                        <td>{deposit.balance_left}</td>
-                        <td>{deposit.status}</td>
-                        <td>{deposit.sales_person}</td>
-                        <td>{deposit.customer_name}</td>
-                        <td>{new Date(deposit.deposit_date).toLocaleDateString("en-GB")}</td>
-                        <td>
-                          {deposit.delivery_date
-                            ? new Date(deposit.delivery_date).toLocaleDateString("en-GB")
-                            : "Not Supplied"}
-                        </td>
-                        <td>
-                          <button onClick={() => handleEditStatus(deposit.id)}>Edit Status</button>
-                        </td>
-                      </tr>
-                    ))}
-                  </tbody>
-                </table>
+                 <DepositTable
+                   deposits={deposits}
+                     onUpdateDepositStatus={handleUpdateDepositStatus}
+                      />
+               
               </Tab>
             </Tabs>
           </div>
 
-          <Modal show={isModalOpen} onHide={() => setIsModalOpen(false)}>
-            <Modal.Header closeButton>
-              <Modal.Title>Edit Deposit Status</Modal.Title>
-            </Modal.Header>
-            <Modal.Body>
-              <Form>
-                <Form.Group>
-                  <Form.Label>Status</Form.Label>
-                  <Form.Control
-                    as="select"
-                    value={modalStatus}
-                    onChange={(e) => setModalStatus(e.target.value)}
-                  >
-                    <option value="Not Supplied">Not Supplied</option>
-                    <option value="Supplied">Supplied</option>
-                  </Form.Control>
-                </Form.Group>
-
-                {modalStatus === "Supplied" && (
-                  <Form.Group className="mt-3">
-                    <Form.Label>Supply Date</Form.Label>
-                    <Form.Control
-                      type="date"
-                      value={modalSupplyDate}
-                      onChange={(e) => setModalSupplyDate(e.target.value)}
-                    />
-                  </Form.Group>
-                )}
-              </Form>
-            </Modal.Body>
-            <Modal.Footer>
-              <Button variant="secondary" onClick={() => setIsModalOpen(false)}>
-                Cancel
-              </Button>
-              <Button variant="primary" onClick={submitStatusUpdate}>
-                Update
-              </Button>
-            </Modal.Footer>
-          </Modal>
+          
         </>
       )}
     </div>
