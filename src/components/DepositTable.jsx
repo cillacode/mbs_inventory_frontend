@@ -76,8 +76,10 @@ const DepositTable = ({ deposits, onUpdateDepositStatus }) => {
                             : "Not Supplied"}
                         </td>
                         <td>
-                          <button onClick={() => handleEditStatus(deposit.id)}>Edit Status</button>
-                        </td>
+                        <button onClick={() => handleEditClick(deposit)}>
+                             Edit Status
+                              </button>
+                         </td>
                 </tr>
               ))
             ) : (
@@ -118,10 +120,12 @@ const DepositTable = ({ deposits, onUpdateDepositStatus }) => {
               <strong>Customer:</strong> {deposit.customer_name}
             </p>
             <p>
-              <strong>Date of Deposit:</strong> {deposit.date_of_deposit}
+              <strong>Date of Deposit:</strong> {new Date(deposit.deposit_date).toLocaleDateString("en-GB")}
             </p>
             <p>
-              <strong>Supply Date:</strong> {deposit.supply_date}
+              <strong>Supply Date:</strong> {deposit.delivery_date
+                            ? new Date(deposit.delivery_date).toLocaleDateString("en-GB")
+                            : "Not Supplied"}
             </p>
             <div className="actions">
               <button onClick={() => handleEditClick(deposit)}>
