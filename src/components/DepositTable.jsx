@@ -1,28 +1,21 @@
-import React, { useState, useEffect } from "react";
-import axios from "axios";
+// src/components/DepositTable.jsx
+import React, { useState } from "react";
 import { Modal, Button, Form } from "react-bootstrap";
 import "./ProductTable.css";
 
-const DepositTable = () => {
-  const [deposits, setDeposits] = useState([]);
+const DepositTable = ({ deposits, onUpdateDepositStatus }) => {
   const [editingId, setEditingId] = useState(null);
   const [editForm, setEditForm] = useState({ status: "", supplyDate: "" });
   const [isModalOpen, setIsModalOpen] = useState(false);
-
-  const fetchDeposits = async () => {
-    const response = await axios.get("/api/deposits");
-    setDeposits(response.data);
-  };
-
-  useEffect(() => {
-    fetchDeposits();
-  }, []);
 
   const handleEditClick = (deposit) => {
     setEditingId(deposit.id);
     setEditForm({
       status: deposit.status,
-      supplyDate: deposit.supply_date !== "Not Supplied" ? deposit.supply_date : "",
+      supplyDate:
+        deposit.supply_date && deposit.supply_date !== "Not Supplied"
+          ? deposit.supply_date
+          : "",
     });
     setIsModalOpen(true);
   };
@@ -32,14 +25,14 @@ const DepositTable = () => {
     setEditForm((prev) => ({ ...prev, [name]: value }));
   };
 
-  const handleEditSubmit = async () => {
-    await axios.put(`/api/deposits/${editingId}`, {
-      status: editForm.status,
-      supplyDate: editForm.status === "Supplied" ? editForm.supplyDate : "Not Supplied",
-    });
+  const handleEditSubmit = () => {
+    onUpdateDepositStatus(
+      editingId,
+      editForm.status,
+      editForm.status === "Supplied" ? editForm.supplyDate : ""
+    );
     setIsModalOpen(false);
     setEditingId(null);
-    fetchDeposits();
   };
 
   return (
@@ -52,7 +45,7 @@ const DepositTable = () => {
           <thead>
             <tr>
               <th>Product</th>
-               <th>Category</th>
+              <th>Category</th>
               <th>Quantity</th>
               <th>Amount Paid</th>
               <th>Balance Left</th>
@@ -65,17 +58,18 @@ const DepositTable = () => {
             </tr>
           </thead>
           <tbody>
-            {deposits.map((deposit) => (
-              <tr key={deposit.id}>
-                <td>{deposit.product_name}</td>
-                 <td>{deposit.category}</td>
-                <td>{deposit.quantity}</td>
-                <td>{deposit.amount_paid}</td>
-                <td>{deposit.balance_left}</td>
-                <td>{deposit.status}</td>
-                <td>{deposit.sales_person}</td>
-                <td>{deposit.customer_name}</td>
-               <td>{new Date(deposit.deposit_date).toLocaleDateString("en-GB")}</td>
+            {deposits.length > 0 ? (
+              deposits.map((deposit) => (
+                <tr key={deposit.id}>
+                  <td>{deposit.product_name}</td>
+                  <td>{deposit.category}</td>
+                  <td>{deposit.quantity}</td>
+                  <td>{deposit.amount_paid}</td>
+                  <td>{deposit.balance_left}</td>
+                  <td>{deposit.status}</td>
+                  <td>{deposit.sales_person}</td>
+                  <td>{deposit.customer_name}</td>
+                   <td>{new Date(deposit.deposit_date).toLocaleDateString("en-GB")}</td>
                         <td>
                           {deposit.delivery_date
                             ? new Date(deposit.delivery_date).toLocaleDateString("en-GB")
@@ -84,15 +78,14 @@ const DepositTable = () => {
                         <td>
                           <button onClick={() => handleEditStatus(deposit.id)}>Edit Status</button>
                         </td>
-
+                </tr>
+              ))
+            ) : (
+              <tr>
+                <td colSpan="11">No deposits available.</td>
               </tr>
-              
-            )) 
-            }
+            )}
           </tbody>
-          <tr>
-              <td colSpan="8">No products available.</td>
-            </tr>
         </table>
       </div>
 
@@ -100,18 +93,40 @@ const DepositTable = () => {
       <div className="mobile-view">
         {deposits.map((deposit) => (
           <div className="product-card" key={deposit.id}>
-            <p><strong>Product:</strong> {deposit.product_name}</p>
-             <p><strong>category:</strong> {deposit.category}</p>
-            <p><strong>Quantity:</strong> {deposit.quantity}</p>
-            <p><strong>Amount Paid:</strong> {deposit.amount_paid}</p>
-            <p><strong>Balance Left:</strong> {deposit.balance_left}</p>
-            <p><strong>Status:</strong> {deposit.status}</p>
-            <p><strong>Sales Person:</strong> {deposit.sales_person}</p>
-            <p><strong>Customer:</strong> {deposit.customer_name}</p>
-            <p><strong>Date of Deposit:</strong> {deposit.date_of_deposit}</p>
-            <p><strong>Supply Date:</strong> {deposit.supply_date}</p>
+            <p>
+              <strong>Product:</strong> {deposit.product_name}
+            </p>
+            <p>
+              <strong>Category:</strong> {deposit.category}
+            </p>
+            <p>
+              <strong>Quantity:</strong> {deposit.quantity}
+            </p>
+            <p>
+              <strong>Amount Paid:</strong> {deposit.amount_paid}
+            </p>
+            <p>
+              <strong>Balance Left:</strong> {deposit.balance_left}
+            </p>
+            <p>
+              <strong>Status:</strong> {deposit.status}
+            </p>
+            <p>
+              <strong>Sales Person:</strong> {deposit.sales_person}
+            </p>
+            <p>
+              <strong>Customer:</strong> {deposit.customer_name}
+            </p>
+            <p>
+              <strong>Date of Deposit:</strong> {deposit.date_of_deposit}
+            </p>
+            <p>
+              <strong>Supply Date:</strong> {deposit.supply_date}
+            </p>
             <div className="actions">
-              <button onClick={() => handleEditClick(deposit)}>Edit Status</button>
+              <button onClick={() => handleEditClick(deposit)}>
+                Edit Status
+              </button>
             </div>
           </div>
         ))}
