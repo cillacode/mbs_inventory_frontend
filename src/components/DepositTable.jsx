@@ -61,7 +61,7 @@ const DepositTable = ({ deposits, onUpdateDepositStatus }) => {
             {deposits.length > 0 ? (
               deposits.map((deposit) => (
                 <tr key={deposit.id}>
-                  <td>{deposit.product.name}</td>
+                  <td>{deposit.product}</td>
                   <td>{deposit.category}</td>
                   <td>{deposit.quantity}</td>
                   <td>{deposit.amount_paid}</td>
@@ -96,7 +96,7 @@ const DepositTable = ({ deposits, onUpdateDepositStatus }) => {
         {deposits.map((deposit) => (
           <div className="product-card" key={deposit.id}>
             <p>
-              <strong>Product:</strong> {deposit.product.name}
+              <strong>Product:</strong> {deposit.product}
             </p>
             <p>
               <strong>Category:</strong> {deposit.category}
