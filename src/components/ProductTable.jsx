@@ -285,21 +285,11 @@ console.log("API URL:", apiUrl);
                 onClick={() => openSaleHistoryModal(product)}>
                 Sales
               </button>
-                {editingProductId === product.id ? (
-  <button 
-    className="action-btn primary"
-    onClick={() => handleSaveClick(product.id)}
-  >
-    Save
-  </button>
-) : (
-  <button 
-    className="action-btn"
-    onClick={() => handleEditClick(product.id, product.price)}
-  >
-    Edit
-  </button>
-)}   
+                 {editingProductId === product.id ? (
+                    <button onClick={() => handleSaveClick(product.id)}>Save</button>
+                  ) : (
+                    <button onClick={() => handleEditClick(product.id, product.price)}>Edit</button>
+                  )} 
             </div>
           </div>
         ))
