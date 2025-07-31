@@ -3,7 +3,7 @@ import jsPDF from "jspdf";
 import "jspdf-autotable";
 import "./ProductTable.css"; // Reuse same styling
 
-const ExchangeTable = ({ exchanges }) => {
+const ExchangeTable = ({ exchange }) => {
   // PDF Export
   const downloadPDF = () => {
     const doc = new jsPDF();
