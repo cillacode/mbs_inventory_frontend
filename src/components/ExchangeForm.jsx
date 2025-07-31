@@ -36,7 +36,7 @@ const ExchangeForm = ({ products, onAddExchange }) => {
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    if (formData.confirmed_entry.toLowerCase() !== "no") {
+    if (formData.confirmed_entry.toLowerCase() === "no") {
       alert("Please enter this exchange in Sales or Add Stock before proceeding.");
       return;
     }
